@@ -1,6 +1,6 @@
-# Aggregation Fact Auto
+# Automatic fact table aggregation
 
-This folder contains SQL models for automated aggregation of fact tables in our dbt project.
+This folder contains SQL models for automated aggregation of fact tables in the dbt project.
 
 ## Models
 
