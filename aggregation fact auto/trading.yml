@@ -1,0 +1,421 @@
+models:
+  - name: trading_ftt_sales
+    description: Fact model that stores order-item-location measures like price, quantity, tax, etc.
+    columns:
+      - &DIM_ORDER_ID
+        name: DIM_ORDER_ID
+        description: Order Id;Numerical identifier for Order ID
+      - &DIM_GROSS_SALES_TRANS_ID
+        name: DIM_GROSS_SALES_TRANS_ID
+        description: Gross POS Transactions (DIM);In BI tools should only be used as a NON-ADDITIVE measure with the COUNT DISTINCT aggregation function. {{ doc("transaction_definition") }}
+      - &DIM_NET_SALES_TRANS_ID
+        name: DIM_NET_SALES_TRANS_ID
+        description: Net POS Transactions (DIM);In BI tools should only be used as a NON-ADDITIVE measure with the COUNT DISTINCT aggregation function. {{ doc("transaction_definition") }}
+      - &DIM_ADJ_NET_SALES_TRANS_ID
+        name: DIM_ADJ_NET_SALES_TRANS_ID
+        description: Adj Net Count of Transactions (DIM);In BI tools should only be used as a NON-ADDITIVE measure with the COUNT DISTINCT aggregation function. {{ doc("transaction_definition") }}
+      - &DIM_STORE_ORDER_GROSS_SALES_TRANS_ID
+        name: DIM_STORE_ORDER_GROSS_SALES_TRANS_ID
+        description: Store Order Gross Sales Transactions (DIM);In BI tools should only be used as a NON-ADDITIVE measure with the COUNT DISTINCT aggregation function. {{ doc("transaction_definition") }}
+      - &DIM_STORE_ORDER_RETURN_TRANS_ID
+        name: DIM_STORE_ORDER_RETURN_TRANS_ID
+        description: Store Order Return Transactions (DIM);In BI tools should only be used as a NON-ADDITIVE measure with the COUNT DISTINCT aggregation function. {{ doc("transaction_definition") }}
+      - &DIM_ACCEPTED_ORDER_TRANS_ID
+        name: DIM_ACCEPTED_ORDER_TRANS_ID
+        description: Accepted Order Transactions (DIM);In BI tools should only be used as a NON-ADDITIVE measure with the COUNT DISTINCT aggregation function. {{ doc("transaction_definition") }}
+      - &DIM_TILL_ID
+        name: DIM_TILL_ID
+        description: Till Id;
+      - &DIM_ORDER_STATUS
+        name: DIM_ORDER_STATUS
+        description: Order Status;Order Status
+      - &DIM_OPD_CHANNEL
+        name: DIM_OPD_CHANNEL
+        description: Order Channel;Channel name received from OPD
+      - &DIM_ORDER_TYPE
+        name: DIM_ORDER_TYPE
+        description: Order Type;Order type
+      - &DIM_COLLECT_TYPE
+        name: DIM_COLLECT_TYPE
+        description: Collect Type;The category of the Order collection method, e.g. Store, Home
+      - &DIM_PLACED_DATE
+        name: DIM_PLACED_DATE
+        description: Order placed date;Order placed date in DD-MM-YYYY format
+      - &DIM_PLACED_DATETIME
+        name: DIM_PLACED_DATETIME
+        description: Order placed datetime;Order placed date in DD-MM-YYYY HH:MM:SS format
+      - &DIM_COMPLETED_DATE
+        name: DIM_COMPLETED_DATE
+        description: Order completed date;Order completed date in DD-MM-YYYY format
+      - &DIM_LOCATION_ORDER_SOURCE
+        name: DIM_LOCATION_ORDER_SOURCE
+        description: Location Order Source;
+      - &DIM_CUSTOMER_ID
+        name: DIM_CUSTOMER_ID
+        description: Customer Id;
+      - &DIM_LOCATION_ID
+        name: DIM_LOCATION_ID
+        description: Location ID;Numerical identifier for Location ID
+      - &DIM_SOURCE_LOCATION_ID
+        name: DIM_SOURCE_LOCATION_ID
+        description: Source Location ID;The location ID where the order was first placed
+      - &DIM_DELIVERY_LOCATION_ID
+        name: DIM_DELIVERY_LOCATION_ID
+        description: Delivery Location ID;The numerical Identifier of the location in which the order is to be collected if Store is selected, e.g. 215
+      - &DIM_DELIVERY_COUNTRY
+        name: DIM_DELIVERY_COUNTRY
+        description: Delivery Country;
+      - &DIM_DELIVERY_COUNTRY_GROUPING
+        name: DIM_DELIVERY_COUNTRY_GROUPING
+        description: Delivery Country Group;
+      - &DIM_DELIVERY_COUNTRY_NAME
+        name: DIM_DELIVERY_COUNTRY_NAME
+        description: Delivery Country Name;
+      - &DIM_CHANNEL_ID
+        name: DIM_CHANNEL_ID
+        description: Channel Id;
+      - &DIM_OPERATION_TYPE
+        name: DIM_OPERATION_TYPE
+        description: Operation Type;
+      - &DIM_ORDER_ITEM_ID
+        name: DIM_ORDER_ITEM_ID
+        description: '{{ doc("order_item_id") }}'
+      - &DIM_ITEM_ID
+        name: DIM_ITEM_ID
+        description: '{{ doc("item_id") }}'
+      - &DIM_ITEM_STATUS
+        name: DIM_ITEM_STATUS
+        description: Item status;Status of the item within the order
+      - &DIM_ITEM_STATUS_DATETIME
+        name: DIM_ITEM_STATUS_DATETIME
+        description: Item status datetime;The datetime when status of the item took effect
+      - &DIM_ITEM_STATUS_DATE
+        name: DIM_ITEM_STATUS_DATE
+        description: Item status date;The date when status of the item took effect
+      - &DIM_PRICE_STATUS
+        name: DIM_PRICE_STATUS
+        description: Price Status;Price Status
+      - &DIM_PRODUCT_STATUS_CODE
+        name: DIM_PRODUCT_STATUS_CODE
+        description: Product Status Code;
+      - &DIM_PRODUCT_STATUS_DESC
+        name: DIM_PRODUCT_STATUS_DESC
+        description: Product Status Description;
+      - &DIM_PRODUCT_STATUS_GROUP
+        name: DIM_PRODUCT_STATUS_GROUP
+        description: Product Status Group;
+      - &DIM_PRODUCT_STATUS_EFFECTIVE_FROM
+        name: DIM_PRODUCT_STATUS_EFFECTIVE_FROM
+        description: Product Status Effective From;
+      - &DIM_PRODUCT_STATUS_EFFECTIVE_TO
+        name: DIM_PRODUCT_STATUS_EFFECTIVE_TO
+        description: Product Status Effective To;
+      - &DIM_TRANSACTION_CURRENCY_ID
+        name: DIM_TRANSACTION_CURRENCY_ID
+        description: Transaction currency;The currency in which the order was placed
+      - &DIM_CURRENCY_ID
+        name: DIM_CURRENCY_ID
+        description: Home Currency;The currency that is the accepted currency of the organisation
+      - &DIM_RATE
+        name: DIM_RATE
+        description: Currency exchange rate;Currency exchange rate
+      - &DIM_MULTIPLIER
+        name: DIM_MULTIPLIER
+        description: Inventory effect multiplier;
+      - &DIM_STORE_ORDER_RETURN_IND
+        name: DIM_STORE_ORDER_RETURN_IND
+        description: Store Order Return Indicator;
+      - &DIM_INVENTORY_TYPE_CODE
+        name: DIM_INVENTORY_TYPE_CODE
+        description: Inventory Type Code;Numerical identifier for Inventory Type
+      - &DIM_TCH_ORDER_PK
+        name: DIM_TCH_ORDER_PK
+        description: ;Order ID BINARY
+      - &DIM_TCH_ORDER_RECORD_SOURCE
+        name: DIM_TCH_ORDER_RECORD_SOURCE
+        description: ;Order record source
+      - &DIM_TCH_LOCATION_PK
+        name: DIM_TCH_LOCATION_PK
+        description: ;Location ID BINARY
+      - &DIM_TCH_CHANNEL_PK
+        name: DIM_TCH_CHANNEL_PK
+        description: ;Channel Id BINARY
+      - &DIM_TCH_ORDER_ITEM_PK
+        name: DIM_TCH_ORDER_ITEM_PK
+        description: ;Combination of order id and item position BINARY
+      - &DIM_TCH_LINK_ORDER_ITEM_ITEM_PK
+        name: DIM_TCH_LINK_ORDER_ITEM_ITEM_PK
+        description: ;Combination of order id, item position, item id BINARY
+      - &DIM_TCH_ITEM_PK
+        name: DIM_TCH_ITEM_PK
+        description: ;Item ID BINARY
+      - &DIM_TCH_LOAD_DATE
+        name: DIM_TCH_LOAD_DATE
+        description: '{{ doc("load_date") }}'
+      - &FTT_TCH_TAX_VALUE
+        name: FTT_TCH_TAX_VALUE
+        description: Tax Value;Technical column with tax data. Used in trading KPI calculations and reconciliation
+      - &FTT_PROMO_VALUE
+        name: FTT_PROMO_VALUE
+        description: Promo Value;
+      - &FTT_GROSS_SALES_VALUE
+        name: FTT_GROSS_SALES_VALUE
+        description: Gross Sales Value;
+      - &FTT_GROSS_SALES_UNITS
+        name: FTT_GROSS_SALES_UNITS
+        description: Gross Sales Units;
+      - &FTT_GROSS_SALES_COST
+        name: FTT_GROSS_SALES_COST
+        description: Gross Sales Cost;
+      - &FTT_GROSS_SALES_TAX
+        name: FTT_GROSS_SALES_TAX
+        description: Gross Sales Tax;
+      - &FTT_GROSS_SALES_PROFIT
+        name: FTT_GROSS_SALES_PROFIT
+        description: Gross Sales Profit;
+      - &FTT_RETURN_VALUE
+        name: FTT_RETURN_VALUE
+        description: Return Value;
+      - &FTT_RETURN_UNITS
+        name: FTT_RETURN_UNITS
+        description: Return Units;
+      - &FTT_RETURN_COST
+        name: FTT_RETURN_COST
+        description: Return Cost;
+      - &FTT_RETURN_TAX
+        name: FTT_RETURN_TAX
+        description: Return Tax;
+      - &FTT_RETURN_PROFIT
+        name: FTT_RETURN_PROFIT
+        description: Return Profit;
+      - &FTT_NET_SALES_VALUE
+        name: FTT_NET_SALES_VALUE
+        description: Net Sales Value;
+      - &FTT_NET_SALES_UNITS
+        name: FTT_NET_SALES_UNITS
+        description: Net Sales Units;
+      - &FTT_NET_SALES_COST
+        name: FTT_NET_SALES_COST
+        description: Net Sales Cost;
+      - &FTT_NET_SALES_TAX
+        name: FTT_NET_SALES_TAX
+        description: Net Sales Tax;
+      - &FTT_NET_SALES_PROFIT
+        name: FTT_NET_SALES_PROFIT
+        description: Net Sales Profit;
+      - &FTT_STORE_ORDER_GROSS_SALES_VALUE
+        name: FTT_STORE_ORDER_GROSS_SALES_VALUE
+        description: Store Order Gross Sales Value;
+      - &FTT_STORE_ORDER_GROSS_UNITS
+        name: FTT_STORE_ORDER_GROSS_UNITS
+        description: Store Order Gross Units;
+      - &FTT_STORE_ORDER_COST_VALUE
+        name: FTT_STORE_ORDER_COST_VALUE
+        description: Store Order Cost Value;
+      - &FTT_STORE_ORDER_TAX_VALUE
+        name: FTT_STORE_ORDER_TAX_VALUE
+        description: Store Order Tax Value;
+      - &FTT_STORE_ORDER_PROFIT_VALUE
+        name: FTT_STORE_ORDER_PROFIT_VALUE
+        description: Store Order Profit Value;
+      - &FTT_ACCEPTED_ORDER_SALES_VALUE
+        name: FTT_ACCEPTED_ORDER_SALES_VALUE
+        description: Accepted Order Sales Value;
+      - &FTT_ACCEPTED_ORDER_UNITS
+        name: FTT_ACCEPTED_ORDER_UNITS
+        description: Accepted Order Units;
+      - &FTT_ACCEPTED_ORDER_COST_VALUE
+        name: FTT_ACCEPTED_ORDER_COST_VALUE
+        description: Accepted Order Cost Value;
+      - &FTT_ACCEPTED_ORDER_TAX_VALUE
+        name: FTT_ACCEPTED_ORDER_TAX_VALUE
+        description: Accepted Order Tax Value;
+      - &FTT_ACCEPTED_ORDER_PROFIT_VALUE
+        name: FTT_ACCEPTED_ORDER_PROFIT_VALUE
+        description: Accepted Order Profit Value;
+      - &FTT_CANCELLED_VALUE
+        name: FTT_CANCELLED_VALUE
+        description: Cancelled value;
+      - &FTT_CANCELLED_UNITS
+        name: FTT_CANCELLED_UNITS
+        description: Cancelled units;
+      - &FTT_TCH_TRANSACTION_NET_PRICE
+        name: FTT_TCH_TRANSACTION_NET_PRICE
+        description: Net price in transaction currency;Net price in transaction currency
+      - &FTT_TCH_NET_PRICE
+        name: FTT_TCH_NET_PRICE
+        description: Net price in GBP;Net price in GBP
+      - &FTT_TCH_COST_PRICE
+        name: FTT_TCH_COST_PRICE
+        description: Cost Price;The landed cost of the item in the order
+      - &FTT_TCH_QUANTITY
+        name: FTT_TCH_QUANTITY
+        description: Quantity;Quantity
+      - &FTT_ADJ_NET_SALES_VALUE
+        name: FTT_ADJ_NET_SALES_VALUE
+        description: Adj Net Sales Value;
+      - &FTT_ADJ_NET_SALES_UNITS
+        name: FTT_ADJ_NET_SALES_UNITS
+        description: Adj Net Sales Units;
+      - &FTT_ADJ_NET_SALES_COST
+        name: FTT_ADJ_NET_SALES_COST
+        description: Adj Net Sales Cost;
+      - &FTT_ADJ_NET_SALES_TAX
+        name: FTT_ADJ_NET_SALES_TAX
+        description: Adj Net Sales Tax;
+      - &FTT_ADJ_NET_SALES_PROFIT
+        name: FTT_ADJ_NET_SALES_PROFIT
+        description: Adj Net Sales Profit;
+      - &FTT_STORE_ORDER_RETURN_VALUE
+        name: FTT_STORE_ORDER_RETURN_VALUE
+        description: Store Order Return Value;
+      - &FTT_STORE_ORDER_RETURN_UNITS
+        name: FTT_STORE_ORDER_RETURN_UNITS
+        description: Store Order Return Units;
+  - name: trading_fltr_cal_period
+    description: Prefiltered trading model that stores sales data for periods TYCW, TYLW, LYCW and LYLW
+    columns:
+      - !!merge <<: *DIM_ORDER_ID
+      - !!merge <<: *DIM_GROSS_SALES_TRANS_ID
+      - !!merge <<: *DIM_NET_SALES_TRANS_ID
+      - !!merge <<: *DIM_ADJ_NET_SALES_TRANS_ID
+      - !!merge <<: *DIM_STORE_ORDER_GROSS_SALES_TRANS_ID
+      - !!merge <<: *DIM_STORE_ORDER_RETURN_TRANS_ID
+      - !!merge <<: *DIM_ACCEPTED_ORDER_TRANS_ID
+      - !!merge <<: *DIM_TILL_ID
+      - !!merge <<: *DIM_ORDER_STATUS
+      - !!merge <<: *DIM_OPD_CHANNEL
+      - !!merge <<: *DIM_ORDER_TYPE
+      - !!merge <<: *DIM_COLLECT_TYPE
+      - !!merge <<: *DIM_PLACED_DATE
+      - !!merge <<: *DIM_PLACED_DATETIME
+      - !!merge <<: *DIM_COMPLETED_DATE
+      - !!merge <<: *DIM_LOCATION_ORDER_SOURCE
+      - !!merge <<: *DIM_CUSTOMER_ID
+      - !!merge <<: *DIM_LOCATION_ID
+      - !!merge <<: *DIM_SOURCE_LOCATION_ID
+      - !!merge <<: *DIM_DELIVERY_LOCATION_ID
+      - !!merge <<: *DIM_DELIVERY_COUNTRY
+      - !!merge <<: *DIM_DELIVERY_COUNTRY_GROUPING
+      - !!merge <<: *DIM_DELIVERY_COUNTRY_NAME
+      - !!merge <<: *DIM_CHANNEL_ID
+      - !!merge <<: *DIM_OPERATION_TYPE
+      - !!merge <<: *DIM_ORDER_ITEM_ID
+      - !!merge <<: *DIM_ITEM_ID
+      - !!merge <<: *DIM_ITEM_STATUS
+      - !!merge <<: *DIM_ITEM_STATUS_DATETIME
+      - !!merge <<: *DIM_ITEM_STATUS_DATE
+      - !!merge <<: *DIM_PRICE_STATUS
+      - !!merge <<: *DIM_PRODUCT_STATUS_CODE
+      - !!merge <<: *DIM_PRODUCT_STATUS_DESC
+      - !!merge <<: *DIM_PRODUCT_STATUS_GROUP
+      - !!merge <<: *DIM_PRODUCT_STATUS_EFFECTIVE_FROM
+      - !!merge <<: *DIM_PRODUCT_STATUS_EFFECTIVE_TO
+      - !!merge <<: *DIM_TRANSACTION_CURRENCY_ID
+      - !!merge <<: *DIM_CURRENCY_ID
+      - !!merge <<: *DIM_RATE
+      - !!merge <<: *DIM_MULTIPLIER
+      - !!merge <<: *DIM_STORE_ORDER_RETURN_IND
+      - !!merge <<: *DIM_INVENTORY_TYPE_CODE
+      - !!merge <<: *DIM_TCH_ORDER_PK
+      - !!merge <<: *DIM_TCH_ORDER_RECORD_SOURCE
+      - !!merge <<: *DIM_TCH_LOCATION_PK
+      - !!merge <<: *DIM_TCH_CHANNEL_PK
+      - !!merge <<: *DIM_TCH_ORDER_ITEM_PK
+      - !!merge <<: *DIM_TCH_LINK_ORDER_ITEM_ITEM_PK
+      - !!merge <<: *DIM_TCH_ITEM_PK
+      - !!merge <<: *DIM_TCH_LOAD_DATE
+      - !!merge <<: *FTT_TCH_TAX_VALUE
+      - !!merge <<: *FTT_PROMO_VALUE
+      - !!merge <<: *FTT_GROSS_SALES_VALUE
+      - !!merge <<: *FTT_GROSS_SALES_UNITS
+      - !!merge <<: *FTT_GROSS_SALES_COST
+      - !!merge <<: *FTT_GROSS_SALES_TAX
+      - !!merge <<: *FTT_GROSS_SALES_PROFIT
+      - !!merge <<: *FTT_RETURN_VALUE
+      - !!merge <<: *FTT_RETURN_UNITS
+      - !!merge <<: *FTT_RETURN_COST
+      - !!merge <<: *FTT_RETURN_TAX
+      - !!merge <<: *FTT_RETURN_PROFIT
+      - !!merge <<: *FTT_NET_SALES_VALUE
+      - !!merge <<: *FTT_NET_SALES_UNITS
+      - !!merge <<: *FTT_NET_SALES_COST
+      - !!merge <<: *FTT_NET_SALES_TAX
+      - !!merge <<: *FTT_NET_SALES_PROFIT
+      - !!merge <<: *FTT_STORE_ORDER_GROSS_SALES_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_GROSS_UNITS
+      - !!merge <<: *FTT_STORE_ORDER_COST_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_TAX_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_PROFIT_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_SALES_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_UNITS
+      - !!merge <<: *FTT_ACCEPTED_ORDER_COST_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_TAX_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_PROFIT_VALUE
+      - !!merge <<: *FTT_CANCELLED_VALUE
+      - !!merge <<: *FTT_CANCELLED_UNITS
+      - !!merge <<: *FTT_TCH_TRANSACTION_NET_PRICE
+      - !!merge <<: *FTT_TCH_NET_PRICE
+      - !!merge <<: *FTT_TCH_COST_PRICE
+      - !!merge <<: *FTT_TCH_QUANTITY
+      - !!merge <<: *FTT_ADJ_NET_SALES_VALUE
+      - !!merge <<: *FTT_ADJ_NET_SALES_UNITS
+      - !!merge <<: *FTT_ADJ_NET_SALES_COST
+      - !!merge <<: *FTT_ADJ_NET_SALES_TAX
+      - !!merge <<: *FTT_ADJ_NET_SALES_PROFIT
+      - !!merge <<: *FTT_STORE_ORDER_RETURN_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_RETURN_UNITS
+  - name: trading_agg_week_opt
+    description: Aggregated model that combines Sales measures and aggregates them to week and option ID
+    columns:
+      - name: WTD_START_CAL_DT
+        description: Week to Date Start Calendar Date;Calendar date for start of a WTD in DD-MM-YYYY format
+      - name: MERCH_YR_WK
+        description: Merchandising Year Week;Displays the Merchandising year & week
+      - !!merge <<: *DIM_LOCATION_ID
+      - !!merge <<: *DIM_CHANNEL_ID
+      - !!merge <<: *OPTION_ID
+      - !!merge <<: *DIM_INVENTORY_TYPE_CODE
+      - !!merge <<: *DIM_PRODUCT_STATUS_DESC
+      - !!merge <<: *DIM_PRODUCT_STATUS_GROUP
+      - !!merge <<: *DIM_LOCATION_ORDER_SOURCE
+      - !!merge <<: *FTT_TCH_TAX_VALUE
+      - !!merge <<: *FTT_PROMO_VALUE
+      - !!merge <<: *FTT_GROSS_SALES_VALUE
+      - !!merge <<: *FTT_GROSS_SALES_UNITS
+      - !!merge <<: *FTT_GROSS_SALES_COST
+      - !!merge <<: *FTT_GROSS_SALES_TAX
+      - !!merge <<: *FTT_GROSS_SALES_PROFIT
+      - !!merge <<: *FTT_RETURN_VALUE
+      - !!merge <<: *FTT_RETURN_UNITS
+      - !!merge <<: *FTT_RETURN_COST
+      - !!merge <<: *FTT_RETURN_TAX
+      - !!merge <<: *FTT_RETURN_PROFIT
+      - !!merge <<: *FTT_NET_SALES_VALUE
+      - !!merge <<: *FTT_NET_SALES_UNITS
+      - !!merge <<: *FTT_NET_SALES_COST
+      - !!merge <<: *FTT_NET_SALES_TAX
+      - !!merge <<: *FTT_NET_SALES_PROFIT
+      - !!merge <<: *FTT_STORE_ORDER_GROSS_SALES_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_GROSS_UNITS
+      - !!merge <<: *FTT_STORE_ORDER_COST_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_TAX_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_PROFIT_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_SALES_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_UNITS
+      - !!merge <<: *FTT_ACCEPTED_ORDER_COST_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_TAX_VALUE
+      - !!merge <<: *FTT_ACCEPTED_ORDER_PROFIT_VALUE
+      - !!merge <<: *FTT_CANCELLED_VALUE
+      - !!merge <<: *FTT_CANCELLED_UNITS
+      - !!merge <<: *FTT_TCH_TRANSACTION_NET_PRICE
+      - !!merge <<: *FTT_TCH_NET_PRICE
+      - !!merge <<: *FTT_TCH_COST_PRICE
+      - !!merge <<: *FTT_TCH_QUANTITY
+      - !!merge <<: *FTT_ADJ_NET_SALES_VALUE
+      - !!merge <<: *FTT_ADJ_NET_SALES_UNITS
+      - !!merge <<: *FTT_ADJ_NET_SALES_COST
+      - !!merge <<: *FTT_ADJ_NET_SALES_TAX
+      - !!merge <<: *FTT_ADJ_NET_SALES_PROFIT
+      - !!merge <<: *FTT_STORE_ORDER_RETURN_VALUE
+      - !!merge <<: *FTT_STORE_ORDER_RETURN_UNITS
