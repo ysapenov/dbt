@@ -1,10 +1,8 @@
-# Automatic fact table aggregation
+## Automatic fact table aggregation
 
-This folder contains SQL models for automated aggregation of fact tables in the dbt project.
+This folder contains SQL model for automated aggregation of fact table in the dbt project.
 
-## Models
-
-### trading_agg_week_opt.sql
+### Model
 
 This model performs weekly aggregation of trading data, optimized for performance and further usage as fact table in the Power BI report.
 
