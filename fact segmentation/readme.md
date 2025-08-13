@@ -1,6 +1,7 @@
 # Fact Segmentation Models
 
-This folder contains SQL models for automated aggregation and filtering of fact table in the dbt project. So, the fact table can be imported to the Power BI reports.
+This folder contains SQL models for automated aggregation and filtering of fact table in the dbt project.  
+So, the large fact table segmented to the two parts, which allows to import data to the Power BI reports.
 
 ## Models
 
