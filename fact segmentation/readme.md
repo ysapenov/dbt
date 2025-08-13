@@ -1,10 +1,12 @@
-## Automatic fact table aggregation
+# Fact Segmentation Models
 
-This folder contains SQL model for automated aggregation of fact table in the dbt project.
+This folder contains SQL models for automated aggregation and filtering of fact table in the dbt project. So, the fact table can be imported to the Power BI reports.
 
-### Model
+## Models
 
-This model performs weekly aggregation of trading data, optimized for performance and further usage as fact table in the Power BI report.
+### 1. trading_agg_week_opt.sql
+
+This model performs weekly aggregation of trading data, optimized for performance and further usage as a fact table.
 
 #### Purpose
 The purpose of this model is to aggregate daily trading data into a weekly summary, providing a more condensed view of trading activities while optimizing query performance.
@@ -19,3 +21,19 @@ This model depends on the following sources:
 - `trading_ftt_sales`: Daily trading fact table
 - `calendar`: Calendar dimension table
 - `product`: Product dimension table
+
+### 2. trading_fltr_cal_period.sql
+
+This model filters trading data based on calendar periods for this and last week, and same period last year.
+
+#### Purpose
+The purpose of this model is to provide a filtered view of trading data for the specified time periods, allowing for more focused analysis and reporting.
+
+#### Key Features
+1. Time-based filtering: Applies filters based on calendar periods (e.g., specific weeks for this and last year).
+2. Preserves granularity: Maintains the original item level granularity of the trading data while applying time-based filters.
+
+#### Dependencies
+This model depends on the following sources:
+- `trading_ftt_sales`: Daily trading fact table
+- `calendar`: Calendar dimension table
